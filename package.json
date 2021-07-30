@@ -25,7 +25,8 @@
     "scaff": "bin/index.js"
   },
   "dependencies": {
-    "commander": "^8.1.0"
+    "commander": "^8.1.0",
+    "prettier": "^2.3.2"
   },
   "devDependencies": {
     "@types/node": "^16.4.7",
