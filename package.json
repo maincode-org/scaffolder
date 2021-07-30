@@ -2,10 +2,9 @@
   "name": "scaffolder",
   "version": "1.0.0",
   "description": "A scaffolding tool to generate React.js and Express.js boilerplate code.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "homepage": "https://github.com/maincode-org/scaffolder#readme",
+  "author": "Mark Kragerup - Maincode",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maincode-org/scaffolder.git"
@@ -15,10 +14,17 @@
     "React.js",
     "Express.js"
   ],
-  "author": "Mark Kragerup - Maincode",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/maincode-org/scaffolder/issues"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/maincode-org/scaffolder#readme"
+  "bin": {
+    "scaf": "bin/index.js"
+  },
+  "dependencies": {
+    "commander": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.7",
+    "typescript": "^4.3.5"
+  }
 }
