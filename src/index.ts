@@ -69,7 +69,7 @@ if (!template) {
 const outDir = `./${options.outdir ?? template.defaultOutDir}`;
 sync(outDir);
 
-// TODO: Write the correct template file (from github download)
+// TODO: Write the correct template file (from github download).
 // TODO: if not filename ends on the same as the template filename ends, append it.
 const file = fs.createWriteStream(`${outDir}/${fileName}`);
 const request = https.get(template.downloadURL, function (response) {
