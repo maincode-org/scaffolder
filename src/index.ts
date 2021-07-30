@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import * as fs from 'fs';
+import * as https from 'https';
+import pkg from 'mkdirp';
+const { sync } = pkg;
 
 const program = new Command();
 
@@ -11,14 +14,23 @@ enum ETemplates {
 
 type ITemplateConfig = {
   type: ETemplates;
+  fileName: string;
   downloadURL: string;
   defaultOutDir: string;
 };
 
 /** <template, file-url> */
 const templates = new Map<ETemplates, ITemplateConfig>([
-  [ETemplates.component, { type: ETemplates.component, downloadURL: '', defaultOutDir: '/src/components' }],
-  [ETemplates.screen, { type: ETemplates.screen, downloadURL: '', defaultOutDir: '/src/screens' }],
+  [
+    ETemplates.component,
+    {
+      type: ETemplates.component,
+      fileName: 'component-boilerplate.tsx',
+      defaultOutDir: '/src/components',
+      downloadURL: 'https://raw.githubusercontent.com/maincode-org/code-snippets/main/frontend/component-boilerplate.tsx',
+    },
+  ],
+  [ETemplates.screen, { type: ETemplates.screen, fileName: '', defaultOutDir: '/src/screens', downloadURL: '' }],
 ]);
 
 program
@@ -39,23 +51,28 @@ if (options.list) {
 }
 
 /** Early return when generate is not specified. */
-if (!options.generate) process.exit();
+if (!options.generate || !options.template || !program.args?.[0]) {
+  if (!options.list) console.log('Missing required params: -g -t <template> <filename> or simply -l to list templates.');
+  process.exit();
+}
 
 /** Identify the correct template. */
-const template = templates.get(options.template);
+const template: ITemplateConfig | undefined = templates.get(options.template);
 if (!template) {
-  console.log(`Template not found: "${options.template.type}". Use -l to list available templates.`);
+  console.log(`Template not found: "${options.template}". Use -l to list available templates.`);
   process.exit(1);
 }
 
 /** Create the correct folders if needed. */
 // TODO: Make file-name dash-cased, remove ext and include a folder for it (only when component).
-const outDir = `${options.outdir ?? template.defaultOutDir}`;
-if (!fs.existsSync(outDir)) {
-  fs.mkdirSync(outDir);
-  console.log(`Directory did no exist - successfully created: ${outDir}`);
-}
+const outDir = `./${options.outdir ?? template.defaultOutDir}`;
+sync(outDir);
 
 // TODO: Write the correct template file (from github download)
+const file = fs.createWriteStream(`${outDir}/${fileName}`);
+const request = https.get(template.downloadURL, function (response) {
+  response.pipe(file);
+  console.log('Yay, boilerplate code written! ;)');
+});
 
 // TODO: Modify it to the given params/name
