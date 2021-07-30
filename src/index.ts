@@ -65,10 +65,12 @@ if (!template) {
 
 /** Create the correct folders if needed. */
 // TODO: Make file-name dash-cased, remove ext and include a folder for it (only when component).
+// TODO: if outdir starts with ./, strip ./ from outdir.
 const outDir = `./${options.outdir ?? template.defaultOutDir}`;
 sync(outDir);
 
 // TODO: Write the correct template file (from github download)
+// TODO: if not filename ends on the same as the template filename ends, append it.
 const file = fs.createWriteStream(`${outDir}/${fileName}`);
 const request = https.get(template.downloadURL, function (response) {
   response.pipe(file);
