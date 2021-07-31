@@ -26,10 +26,13 @@
   },
   "dependencies": {
     "commander": "^8.1.0",
+    "inquirer": "^8.1.2",
     "mkdirp": "^1.0.4",
+    "pad": "^3.2.0",
     "prettier": "^2.3.2"
   },
   "devDependencies": {
+    "@types/inquirer": "^7.3.3",
     "@types/mkdirp": "^1.0.2",
     "@types/node": "^16.4.7",
     "ts-node": "^10.1.0",

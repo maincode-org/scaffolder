@@ -2,8 +2,12 @@
 import { Command } from 'commander';
 import * as fs from 'fs';
 import * as https from 'https';
+import * as inquirer from 'inquirer';
+import * as pad from 'pad';
+
 import pkg from 'mkdirp';
 const { sync } = pkg;
+
 
 const program = new Command();
 
