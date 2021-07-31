@@ -6,40 +6,16 @@ import * as inquirer from 'inquirer';
 import * as pad from 'pad';
 
 import pkg from 'mkdirp';
+import { ITemplateConfig, templateConfigs } from './template-configs';
 const { sync } = pkg;
 
 
 const program = new Command();
 
-enum ETemplates {
-  'component' = 'component',
-  'screen' = 'screen',
-}
+program.command('list').alias('ls').description('List all templates');
 
-type ITemplateConfig = {
-  type: ETemplates;
-  fileName: string;
-  downloadURL: string;
-  defaultOutDir: string;
-};
 
-/** <template, file-url> */
-const templates = new Map<ETemplates, ITemplateConfig>([
-  [
-    ETemplates.component,
-    {
-      type: ETemplates.component,
-      fileName: 'component-boilerplate.tsx',
-      defaultOutDir: '/src/components',
-      downloadURL: 'https://raw.githubusercontent.com/maincode-org/code-snippets/main/frontend/component-boilerplate.tsx',
-    },
-  ],
-  [ETemplates.screen, { type: ETemplates.screen, fileName: '', defaultOutDir: '/src/screens', downloadURL: '' }],
-]);
-
-program
-  .option('-l, --list', 'lists available templates')
-  .option('-g, --generate', 'generate mode')
+program.command('generate')
   .option('-t, --template <template>', 'specify template')
   .option('-o, --outdir <outdir>', 'relative path to output dir');
 
@@ -49,9 +25,8 @@ const fileName = program.args; // The "rest" of the arguments given. "command [o
 
 if (options.list) {
   console.log('--- Templates -----');
-  Array.from(templates.keys()).forEach((template) => console.log(`> ${template}`));
+  Array.from(templateConfigs.keys()).forEach((template) => console.log(`> ${template}`));
   console.log('-------------------');
-  process.exit();
 }
 
 /** Early return when generate is not specified. */
@@ -61,7 +36,7 @@ if (!options.generate || !options.template || !program.args?.[0]) {
 }
 
 /** Identify the correct template. */
-const template: ITemplateConfig | undefined = templates.get(options.template);
+const template: ITemplateConfig | undefined = templateConfigs.get(options.template);
 if (!template) {
   console.log(`Template not found: "${options.template}". Use -l to list available templates.`);
   process.exit(1);
