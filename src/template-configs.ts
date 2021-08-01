@@ -16,11 +16,11 @@ export const templateConfigs = new Map<ETemplates, ITemplateConfig>([
     {
       type: ETemplates.component,
       fileExtension: 'tsx',
-      defaultOutDir: '/src/components',
+      defaultOutDir: 'src/components',
       downloadURL: 'https://raw.githubusercontent.com/maincode-org/code-snippets/main/frontend/component-boilerplate.tsx',
     },
   ],
-  [ETemplates.screen, { type: ETemplates.screen, fileExtension: 'tsx', defaultOutDir: '/src/screens', downloadURL: '' }],
+  [ETemplates.screen, { type: ETemplates.screen, fileExtension: 'tsx', defaultOutDir: 'src/screens', downloadURL: '' }],
 ]);
 
 export const listTemplates = () => {

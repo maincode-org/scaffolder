@@ -50,9 +50,13 @@ export const generateCommand = async (program: Command) => {
   let dashCasedFilename = answers.fileName.replace(/[A-Z]/g, (m: string) => '-' + m.toLowerCase()).substring(1);
   const defaultOutDir = template.type === ETemplates.component ? `${template.defaultOutDir}/${dashCasedFilename}` : template.defaultOutDir;
 
+  console.log('Prepared default output folder');
+
   /** Create the correct folders if needed. (remove ./ prefix when supplied from the user). */
-  const outDir = `./${options.outdir.replace('./', '') ?? defaultOutDir}`;
+  const outDir = `./${options.outdir?.replace('./', '') ?? defaultOutDir}`;
   sync(outDir);
+
+  console.log('Made output folder');
 
   // TODO add CSS module.
 
@@ -60,8 +64,7 @@ export const generateCommand = async (program: Command) => {
   const fileStream = fs.createWriteStream(`${outDir}/${answers.fileName.replace(/\.[^/.]+$/, '')}.${template.fileExtension}`);
 
   /** Writes the correct template file (from github download). */
-  const file = await https.get(template.downloadURL);
-  file.pipe(fileStream);
+  const response = https.get(template.downloadURL, (response) => response.pipe(fileStream));
 
   // TODO: Modify it to the given params/name
 };
