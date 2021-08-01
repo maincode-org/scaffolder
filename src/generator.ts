@@ -51,7 +51,7 @@ export const generateCommand = async (program: Command) => {
   const defaultOutDir = template.type === ETemplates.component ? `${template.defaultOutDir}/${dashCasedFilename}` : template.defaultOutDir;
 
   /** Create the correct folders if needed. (remove ./ prefix when supplied from the user). */
-  const outDir = `./${answers.outDir?.replace('./', '') ?? defaultOutDir}`;
+  const outDir = `./${answers.outDir?.length > 0 ? answers.outDir?.replace('./', '') : defaultOutDir}`;
   sync(outDir);
 
   // TODO add CSS module.

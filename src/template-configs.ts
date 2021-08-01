@@ -22,9 +22,3 @@ export const templateConfigs = new Map<ETemplates, ITemplateConfig>([
   ],
   [ETemplates.screen, { type: ETemplates.screen, fileExtension: 'tsx', defaultOutDir: 'src/screens', downloadURL: '' }],
 ]);
-
-export const listTemplates = () => {
-  console.log('--- Templates -----');
-  Array.from(templateConfigs.keys()).forEach((template) => console.log(`> ${template}`));
-  console.log('-------------------');
-};
