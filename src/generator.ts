@@ -32,13 +32,13 @@ export const generateCommand = async (program: Command) => {
     {
       type: 'text',
       name: 'entityName',
-      message: 'Enter entity name. Eg. "MyComponent". Remember correct casing, but leave out the extension as it is automatically added.',
+      message: 'Enter entity name. Eg. "MyComponent".\nRemember correct casing, but leave out the extension as it is automatically added.\n',
     },
     {
       type: 'text',
       name: 'outDir',
       initial: '',
-      message: 'Custom output directory overwrite.',
+      message: 'Custom output directory overwrite. (empty for default:recommended)',
     },
   ]);
 

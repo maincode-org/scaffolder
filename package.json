@@ -1,6 +1,6 @@
 {
   "name": "@markido/scaffolder",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A scaffolding tool to generate React.js and Express.js boilerplate code.",
   "homepage": "https://github.com/maincode-org/scaffolder#readme",
   "author": "Mark Kragerup - Maincode",
