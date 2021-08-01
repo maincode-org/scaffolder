@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",                                /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', 'ES2021', or 'ESNEXT'. */
-    "module": "es2020",                           /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
+    "module": "ES6",                           /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
     // "outFile": "./",                             /* Concatenate and emit output to single file. */
     "outDir": "bin",                              /* Redirect output structure to the directory. */
     "rootDir": "src",                             /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */

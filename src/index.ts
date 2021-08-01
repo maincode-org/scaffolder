@@ -6,13 +6,13 @@ import * as inquirer from 'inquirer';
 import * as pad from 'pad';
 
 import pkg from 'mkdirp';
-import { ITemplateConfig, templateConfigs } from './template-configs';
+import { ITemplateConfig, listTemplates, templateConfigs } from './template-configs.js';
 const { sync } = pkg;
 
 
 const program = new Command();
 
-program.command('list').alias('ls').description('List all templates');
+program.command('list').alias('ls').description('List all templates').action(() => listTemplates());
 
 
 program.command('generate')
