@@ -67,9 +67,9 @@ export const generateCommand = async (program: Command) => {
     fs.readFile(fileStream.path, 'utf8', function (err, data) {
       if (err) return console.log(err);
 
-      let result = data.replace(/BoilerPlate/g, answers.entityName);
+      let modifiedContent = data.replace(/BoilerPlate/g, answers.entityName);
 
-      fs.writeFile(fileStream.path, result, 'utf8', (err) => (err ? console.log(err) : null));
+      fs.writeFile(fileStream.path, modifiedContent, 'utf8', (err) => (err ? console.log(err) : null));
     });
   });
 };
