@@ -25,6 +25,12 @@ export const generateCommand = async (program: Command) => {
     },
     {
       type: (prev) => (prev === ETemplates.component ? 'confirm' : null),
+      name: 'includeChildren',
+      message: 'Include rendered children?',
+      initial: 'n',
+    },
+    {
+      type: 'confirm',
       name: 'includeCSS',
       message: 'Include a CSS module?',
       initial: 'y',
@@ -48,13 +54,11 @@ export const generateCommand = async (program: Command) => {
 
   /** For components, append a sub-folder with the component name in dash-case. */
   let dashCasedFilename = answers.entityName.replace(/[A-Z]/g, (m: string) => '-' + m.toLowerCase()).substring(1);
-  const defaultOutDir = template.type === ETemplates.component ? `${template.defaultOutDir}/${dashCasedFilename}` : template.defaultOutDir;
+  const defaultOutDir = `${template.defaultOutDir}/${dashCasedFilename}`;
 
   /** Create the correct folders if needed. (remove ./ prefix when supplied from the user). */
   const outDir = `./${answers.outDir?.length > 0 ? answers.outDir?.replace('./', '') : defaultOutDir}`;
   sync(outDir);
-
-  // TODO add CSS module.
 
   /** Creates the file in the output directory, with the correct extension (user given extensions are stripped by regex). */
   const fileStream = fs.createWriteStream(`${outDir}/${answers.entityName.replace(/\.[^/.]+$/, '')}.${template.fileExtension}`);
@@ -68,6 +72,18 @@ export const generateCommand = async (program: Command) => {
       if (err) return console.log(err);
 
       let modifiedContent = data.replace(/BoilerPlate/g, answers.entityName);
+
+      /** Remove "children" prop if opted-out. */
+      if (!answers.includeChildren) {
+        modifiedContent = modifiedContent.replace(/, children/g, '');
+        modifiedContent = modifiedContent.replace(/{children}/g, '');
+      }
+
+      /** Adds a CSS Module if opted in. */
+      if (answers.includeCSS) {
+        fs.createWriteStream(`${outDir}/${dashCasedFilename}.module.css`);
+        modifiedContent = `import styles from './${dashCasedFilename}.module.css';\n${modifiedContent}`;
+      }
 
       fs.writeFile(fileStream.path, modifiedContent, 'utf8', (err) => (err ? console.log(err) : null));
     });

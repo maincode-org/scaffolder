@@ -20,5 +20,13 @@ export const templateConfigs = new Map<ETemplates, ITemplateConfig>([
       downloadURL: 'https://raw.githubusercontent.com/maincode-org/code-snippets/main/frontend/component-boilerplate.tsx',
     },
   ],
-  [ETemplates.screen, { type: ETemplates.screen, fileExtension: 'tsx', defaultOutDir: 'src/screens', downloadURL: '' }],
+  [
+    ETemplates.screen,
+    {
+      type: ETemplates.screen,
+      fileExtension: 'tsx',
+      defaultOutDir: 'src/screens',
+      downloadURL: 'https://raw.githubusercontent.com/maincode-org/code-snippets/main/frontend/screen-boilerplate.tsx',
+    },
+  ],
 ]);
